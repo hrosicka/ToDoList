@@ -16,43 +16,29 @@ def add_task(request):
 
 def task_list(request):
     filter_form = FilterPriorityForm(request.GET)
-    tasks = Task.objects.order_by('-priority')
+    tasks = Task.objects.annotate(
+        priority_order=Case(
+            When(priority='height', then=Value(1)),
+            When(priority='middle', then=Value(2)),
+            When(priority='low', then=Value(3)),
+            default=Value(3),
+            output_field=IntegerField(),
+        )
+    )
+    order = request.GET.get('order')
+    if order:
+        tasks = tasks.order_by(order)
+    else:
+        tasks = tasks.order_by('priority_order')
 
     if filter_form.is_valid():
-        priority = filter_form.cleaned_data.get('priority')
-        tasks = tasks.filter(priority=priority).annotate(
-                priority_order=Case(
-                    When(priority='height', then=Value(1)),
-                    When(priority='middle', then=Value(2)),
-                    When(priority='low', then=Value(3)),
-                    default=Value(3),
-                    output_field=IntegerField(),
-                )
-            ).order_by('priority_order')
-        
-        if filter_form.is_valid():
-            priority = filter_form.cleaned_data.get('priority')
-            if priority:
-                tasks = tasks.filter(priority=priority).annotate(
-                    priority_order=Case(
-                        When(priority='height', then=Value(1)),
-                        When(priority='middle', then=Value(2)),
-                        When(priority='low', then=Value(3)),
-                        default=Value(3),
-                        output_field=IntegerField(),
-                        )
-                ).order_by('priority_order')
+        priority_filter = filter_form.cleaned_data.get('priority')
+        if priority_filter:
+            tasks = tasks.filter(priority=priority_filter)
+            if order:
+                tasks = tasks.order_by(order)
             else:
-                # Pokud je vybrána "Všechny", stále seřadíme
-                tasks = Task.objects.annotate(
-                    priorita_order=Case(
-                        When(priority='height', then=Value(1)),
-                        When(priority='middle', then=Value(2)),
-                        When(priority='low', then=Value(3)),
-                        default=Value(3),
-                        output_field=IntegerField(),
-                        )
-                ).order_by('priorita_order')
+                tasks = tasks.order_by('priority_order')
 
     return render(request, 'todolist/task_list.html', {'tasks': tasks, 'filter_form': filter_form})
 

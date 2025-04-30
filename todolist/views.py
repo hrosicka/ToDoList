@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import AddTaskForm
+from .forms import AddTaskForm, FilterPriorityForm
 from .models import Task
+from django.db.models import Case, When, Value, IntegerField
 
 def add_task(request):
     if request.method == 'POST':
@@ -14,8 +15,46 @@ def add_task(request):
     return render(request, 'todolist/add_task.html', {'form': form})
 
 def task_list(request):
-    tasks = Task.objects.all()
-    return render(request, 'todolist/task_list.html', {'tasks': tasks})
+    filter_form = FilterPriorityForm(request.GET)
+    tasks = Task.objects.order_by('-priority')
+
+    if filter_form.is_valid():
+        priority = filter_form.cleaned_data.get('priority')
+        tasks = tasks.filter(priority=priority).annotate(
+                priority_order=Case(
+                    When(priority='height', then=Value(1)),
+                    When(priority='middle', then=Value(2)),
+                    When(priority='low', then=Value(3)),
+                    default=Value(3),
+                    output_field=IntegerField(),
+                )
+            ).order_by('priority_order')
+        
+        if filter_form.is_valid():
+            priority = filter_form.cleaned_data.get('priority')
+            if priority:
+                tasks = tasks.filter(priority=priority).annotate(
+                    priority_order=Case(
+                        When(priority='height', then=Value(1)),
+                        When(priority='middle', then=Value(2)),
+                        When(priority='low', then=Value(3)),
+                        default=Value(3),
+                        output_field=IntegerField(),
+                        )
+                ).order_by('priority_order')
+            else:
+                # Pokud je vybrána "Všechny", stále seřadíme
+                tasks = Task.objects.annotate(
+                    priorita_order=Case(
+                        When(priority='height', then=Value(1)),
+                        When(priority='middle', then=Value(2)),
+                        When(priority='low', then=Value(3)),
+                        default=Value(3),
+                        output_field=IntegerField(),
+                        )
+                ).order_by('priorita_order')
+
+    return render(request, 'todolist/task_list.html', {'tasks': tasks, 'filter_form': filter_form})
 
 def tag_resolved(request, task_id):
     task = get_object_or_404(Task, pk=task_id)

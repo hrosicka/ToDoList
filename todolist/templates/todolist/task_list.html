@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seznam úkolů</title>
+</head>
+<body>
+    <h1>TODO LIST</h1>
+
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {% if task.resolved %}
+                    <s style="color: gray;">{{ task.description }}</s>
+                    (Dokončeno)
+                {% else %}
+                    {{ task.description }}
+                {% endif %}
+                (Priorita: {{ task.get_priority_display }})
+                {% if task.resolved %}
+                    | <a href="{% url 'delete_task' task.id %}">Smazat</a>
+                {% else %}
+                    | <a href="{% url 'tag_resolved' task.id %}">Označit jako dokončené</a>
+                    | <a href="{% url 'edit_task' task.id %}">Editovat</a>
+                    | <a href="{% url 'delete_task' task.id %}">Smazat</a>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>Žádné úkoly zatím nejsou.</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'add_task' %}">Přidat nový úkol</a></p>
+</body>
+</html>

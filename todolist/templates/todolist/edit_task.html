@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editovat úkol</title>
+</head>
+<body>
+    <h1>Editovat úkol</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Uložit změny</button>
+    </form>
+
+    <p><a href="{% url 'task_list' %}">Zpět na seznam úkolů</a></p>
+</body>
+</html>

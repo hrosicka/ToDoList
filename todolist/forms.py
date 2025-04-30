@@ -12,3 +12,15 @@ class FilterPriorityForm(forms.Form):
         required=False,
         label='Filtrovat podle priority'
     )
+    order_choices = [
+        ('', 'Default'),
+        ('date_created', 'Datum vytvoření (nejstarší první)'),
+        ('-date_created', 'Datum vytvoření (nejnovější první)'),
+        ('priority_order', 'Priorita (vysoká první)'), # Budeme řadit podle našeho anotovaného pole
+        ('-priority_order', 'Priorita (nízká první)'),
+    ]
+    order = forms.ChoiceField(
+        choices=order_choices,
+        required=False,
+        label='Řadit podle'
+    )

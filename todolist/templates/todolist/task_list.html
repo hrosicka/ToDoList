@@ -9,9 +9,9 @@
     <h1>TODO LIST</h1>
 
     <form method="get">
-        {{ filter_form }}
-        <button type="submit">Filtrovat</button>
-        <a href="{% url 'task_list' %}">Zrušit filtr</a>
+        {{ filter_form.as_p }}
+        <button type="submit">Filtrovat a řadit</button>
+        <a href="{% url 'task_list' %}">Zrušit filtr a řazení</a>
     </form>
     <br>
 
@@ -24,7 +24,7 @@
                 {% else %}
                     {{ task.description }}
                 {% endif %}
-                (Priorita: {{ task.get_priority_display }})
+                (Priorita: {{ task.get_priority_display }}, , Vytvořeno: {{ task.date_created }})
                 {% if task.resolved %}
                     | <a href="{% url 'delete_task' task.id %}">Smazat</a>
                 {% else %}

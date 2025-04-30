@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Task(models.Model):
     description = models.CharField(max_length=200)
@@ -14,6 +15,8 @@ class Task(models.Model):
         choices=priority_choices,
         default='stredni',
     )
+
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.popis

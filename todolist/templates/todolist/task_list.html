@@ -8,6 +8,13 @@
 <body>
     <h1>TODO LIST</h1>
 
+    <form method="get">
+        {{ filter_form }}
+        <button type="submit">Filtrovat</button>
+        <a href="{% url 'task_list' %}">Zrušit filtr</a>
+    </form>
+    <br>
+
     <ul>
         {% for task in tasks %}
             <li>

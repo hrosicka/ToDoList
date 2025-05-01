@@ -1,17 +1,15 @@
 from django import forms
-from .models import Task
+from .models import Task, Category
 
 class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['description', 'priority']
+        fields = ['description', 'priority', 'category']
 
 class FilterPriorityForm(forms.Form):
-    priority = forms.ChoiceField(
-        choices=[('', 'All')] + Task.priority_choices,
-        required=False,
-        label='Filtrovat podle priority'
-    )
+    priority_choices = [('', 'All')] + list(Task.priority_choices)
+    priority = forms.ChoiceField(choices=priority_choices, required=False, label='Filtrovat podle priority')
+
     order_choices = [
         ('', 'Default'),
         ('date_created', 'Datum vytvoření (nejstarší první)'),
@@ -24,3 +22,10 @@ class FilterPriorityForm(forms.Form):
         required=False,
         label='Řadit podle'
     )
+
+class FilterCategoryForm(forms.Form):
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.all(), 
+        required=False,
+        empty_label="Všechny kategorie",
+        label="Filtrovat podle kategorie")

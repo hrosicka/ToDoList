@@ -1,7 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import AddTaskForm, FilterPriorityForm, FilterCategoryForm
 from .models import Task
 from django.db.models import Case, When, Value, IntegerField
+import csv
 
 def add_task(request):
     if request.method == 'POST':
@@ -78,3 +80,22 @@ def edit_task(request, task_id):
     else:
         form = AddTaskForm(instance=task)
     return render(request, 'todolist/edit_task.html', {'form': form, 'task': task})
+
+def export_tasks_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="tasks.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Desctiption', 'Resolved', 'Priority', 'Data Created', 'Category'])
+
+    tasks = Task.objects.all()
+    for task in tasks:
+        writer.writerow([
+            task.description,
+            task.resolved,
+            task.get_priority_display(),
+            task.date_created,
+            task.category.name if task.category else '',
+        ])
+
+    return response

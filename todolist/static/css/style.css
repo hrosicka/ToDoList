@@ -1,12 +1,180 @@
 /* todolist/static/css/style.css */
+
+body {
+    font-family: sans-serif; /* Modernější font */
+    background-color: #f8f9fa; /* Světle šedé pozadí stránky */
+    display: flex;
+    justify-content: center;
+    padding-top: 20px; /* Trochu místa nahoře */
+    min-height: 100vh; /* Aby body zabíraly celou výšku okna */
+    align-items: flex-start; /* Zarovnání obsahu body na začátek (nahoru) */
+}
+
+.my-container { /* Styl pro hlavní kontejner obsahu */
+    width: 90%;
+    max-width: 960px; /* Běžná maximální šířka */
+    padding: 20px;
+    background-color: #fff; /* Bílé pozadí kontejneru (můžeš změnit) */
+    border-radius: 8px; /* Zaoblené rohy pro jemnější vzhled */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Jemný stín pro vyniknutí */
+    margin-bottom: 20px; /* Trochu místa pod kontejnerem */
+}
+
 h1 {
-    color: navy;
+    color: #333;
     text-align: center;
+    margin-bottom: 30px;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
 
-.my-kontainer {
-    margin-left: 20px;
-    margin-right: 20px;
-    padding: 20px; /* Volitelné vnitřní odsazení */
+.card-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table thead th {
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table thead th:nth-child(6), /* Complete */
+.table thead th:nth-child(7), /* Edit */
+.table thead th:nth-child(8) { /* Delete */
+    width: 50px; /* Nastav požadovanou šířku */
+    text-align: center; /* Volitelně zarovnat obsah na střed */
+}
+
+
+.table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.table tbody td:nth-child(6), /* Complete */
+.table tbody td:nth-child(7), /* Edit */
+.table tbody td:nth-child(8) { /* Delete */
+    width: 50px; /* Stejná šířka jako pro záhlaví */
+    text-align: center; /* Volitelně zarovnat obsah na střed */
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.badge-success {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+}
+
+.badge-warning {
+    background-color: #ffc107;
+    color: #212529;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+}
+
+.action-buttons a {
+    margin-right: 5px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #007bff;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.action-buttons a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.action-buttons a.delete {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.action-buttons a.delete:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.button-form-container {
+    display: flex;
+    justify-content: space-between; /* Pushes the buttons and form to the edges */
+    align-items: flex-start; /* Aligns items to the start (top in this case) */
+    margin-bottom: 20px; /* Add some space below this container */
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+}
+
+.button-form-container > div {
+    display: flex; /* Make sure buttons are displayed as a row */
+    margin-bottom: 10px; /* Add space below the buttons */
+    align-self: flex-end; /* Align buttons to the right */
+}
+
+.button-form-container form {
+    margin-bottom: 10px;
 }

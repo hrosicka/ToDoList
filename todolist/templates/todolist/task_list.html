@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seznam úkolů</title>
+    <title>Todo List</title>
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="my-kontainer">
-        <h1>TODO LIST</h1>
-
-        <form method="get">
-            <p>{{ priority_filter_form.as_p }}</p>
-            <p>{{ category_filter_form.as_p }}</p>
-            <p>{{ priority_filter_form.order.as_p }}</p>
-            <button type="submit" class="btn btn-primary">Filtrovat a řadit</button>
-            <a href="{% url 'task_list' %}" class="btn btn-secondary ml-2">Zrušit filtr a řazení</a>
-        </form>
-        <br>
-
+    <div class="my-container">
+        <h1 class="pacifico">TODO LIST</h1>
+        <div class="button-form-container d-flex justify-content-between align-items-start">
+            <form method="get">
+                <p>{{ priority_filter_form.as_p }}</p>
+                <p>{{ category_filter_form.as_p }}</p>
+                <p>{{ priority_filter_form.order.as_p }}</p>
+                <button type="submit" class="btn btn-primary">Filter and Sort</button>
+                <a href="{% url 'task_list' %}" class="btn btn-secondary ml-2">Cancel Filter and Sort</a>
+            </form>
+            <div>
+                <a href="{% url 'add_task' %}" class="btn btn-success">Add New Task</a>
+                <a href="{% url 'export_tasks_csv' %}" class="btn btn-info ml-2">Export Tasks to CSV</a>
+            </div>
+        </div>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -29,7 +33,9 @@
                     <th>Category</th>
                     <th>Created</th>
                     <th>State</th>
-                    <th>Action</th>
+                    <th>Cmpl</th>
+                    <th>Edit</th>
+                    <th>Del</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,31 +53,30 @@
                     <td>{{ task.date_created|date:"d.m.Y H:i" }}</td>
                     <td>
                         {% if task.resolved %}
-                            <span class="badge badge-success">Done</span>
+                            <span class="badge badge-success">Completed</span>
                         {% else %}
-                            <span class="badge badge-warning">Open</span>
+                            <span class="badge badge-warning">Active</span>
                         {% endif %}
                     </td>
-                    <td>
-                        <div class="d-flex flex-column">
-                            {% if not task.resolved %}
-                                <a href="{% url 'tag_resolved' task.id %}" class="btn btn-sm btn-outline-success mb-1">Complete</a>
-                                <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-outline-info mb-1">Edit</a>
-                            {% endif %}
-                            <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                        </div>
+                    <td class="action-buttons">
+                        {% if not task.resolved %}
+                            <a href="{% url 'tag_resolved' task.id %}" class="btn btn-sm btn-outline-success mb-1" title="Complete task"><i class="fas fa-check"></i></a>
+                        {% endif %}
+                    </td>
+                    <td class="action-buttons">
+                        {% if not task.resolved %}
+                            <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-outline-info mb-1" title="Edit task"><i class="fas fa-pen"></i></a>
+                        {% endif %}
+                    </td>
+                    <td class="action-buttons">
+                        <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-outline-danger" title="Delete task"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="6">Žádné úkoly zatím nejsou.</td></tr>
+                <tr><td colspan="6">No tasks yet.</td></tr>
                 {% endfor %}
             </tbody>
         </table>
-
-        <p>
-            <a href="{% url 'add_task' %}" class="btn btn-success">Přidat nový úkol</a>
-            <a href="{% url 'export_tasks_csv' %}" class="btn btn-info ml-2">Exportovat úkoly do CSV</a>
-        </p>
     </div>
 </body>
 </html>

@@ -76,4 +76,17 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+---
+
+## 🤔 FAQ
+**Q: Can I use this app for team collaboration?**
+
+A: Currently, ToDoList is designed for individual use, but feel free to fork the repo and extend it for teams!
+
+**Q: How do I back up my tasks?**
+
+A: Use the CSV export functionality to save your tasks locally.
+
+
+
 

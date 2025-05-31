@@ -1,6 +1,15 @@
 # ToDoList ✅
 **Your Ultimate Task Management Sidekick!**
 
+[![Python Version](https://img.shields.io/badge/python-3.7%2B-blue)](https://www.python.org/)
+[![Django Version](https://img.shields.io/badge/django-%3E%3D3.0-success)](https://www.djangoproject.com/)
+[![CSV Export](https://img.shields.io/badge/export-CSV-blue)](#features)
+[![Bootstrap Styled](https://img.shields.io/badge/ui-bootstrap-7952b3)](https://getbootstrap.com/)
+[![Beginner Friendly](https://img.shields.io/badge/beginner-friendly-yellowgreen)](#contributing)
+[![Procrastination](https://img.shields.io/badge/procrastination-0%25-brightgreen)](#)
+[![Stay Organized](https://img.shields.io/badge/stay-organized-blueviolet)](#)
+[![Single User](https://img.shields.io/badge/mode-single--user-lightgrey)](#faq)
+
 ---
 
 ## 🚀 Why Choose ToDoList?

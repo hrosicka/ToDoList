@@ -1,6 +1,7 @@
 # ToDoList ✅
 **Your Ultimate Task Management Sidekick!**
 
+![Stars](https://img.shields.io/github/stars/hrosicka/ToDoList)
 [![Python Version](https://img.shields.io/badge/python-3.7%2B-blue)](https://www.python.org/)
 [![Django Version](https://img.shields.io/badge/django-%3E%3D3.0-success)](https://www.djangoproject.com/)
 [![CSV Export](https://img.shields.io/badge/export-CSV-blue)](#features)

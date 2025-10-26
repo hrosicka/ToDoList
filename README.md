@@ -96,6 +96,14 @@ A: Currently, ToDoList is designed for individual use, but feel free to fork the
 
 A: Use the CSV export functionality to save your tasks locally.
 
+---
 
+## 👩‍💻 Author
 
+Lovingly crafted by [Hanka Robovska](https://github.com/hrosicka) 👩‍🔬
 
+---
+
+## 📝 License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details. Free to use, modify, and distribute as needed.
